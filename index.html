@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>KOMFORT</title>
+    <meta property="og:title" content="Твій комфорт — наша ретуш." />
+    <meta property="og:description" content="Професійна обробка фото. Результат впродовж 24 годин." />
+    <meta property="og:image" content="https://solllixxx.github.io/komfort/logo.jpg" />
+    <meta property="og:url" content="https://solllixxx.github.io/komfort/" />
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="logo.jpg" type="image/jpeg">
+</head>
+<body>
+
+    <header>
+        <nav class="container">
+            <div class="logo">KOMFORT</div>
+            <ul class="nav-links">
+                <li><a href="#pricing">Ціни</a></li>
+                <li><a href="#workflow">Процес</a></li>
+                <li><a href="#archive">Архів</a></li>
+                <li><a href="#footer">Інформація</a></li>
+                <li><button class="btn-outline open-modal">Замовити</button></li>
+            </ul>
+        </nav>
+    </header>
+
+<section class="hero">
+    <div class="container hero-layout">
+<div class="hero-text">
+    <h1 class="reveal">Твій комфорт — <br>наша ретуш.</h1>
+    <p class="reveal">Професійна обробка фото. Результат впродовж 24 годин.</p>
+    
+<div class="hero-btns reveal" style="display: flex; gap: 20px; flex-wrap: wrap;">
+    <button class="btn-white open-modal">Розпочати</button>
+    
+    <button id="infoBtn" class="btn-white">Інформація</button>
+</div>
+</div>
+
+        <div class="bank-cards-sidebar reveal">
+            <div class="bank-item" onclick="copyCard('4149609054649951', 'Приват24')">
+                <div class="bank-info">
+                    <span class="bank-name">Приват24</span>
+                    <span class="card-num">4149 ••• 9951</span>
+                </div>
+                <span class="copy-icon">КОПІЮВАТИ</span>
+            </div>
+
+            <div class="bank-item" onclick="copyCard('4441111133758361', 'Monobank')">
+                <div class="bank-info">
+                    <span class="bank-name">Monobank</span>
+                    <span class="card-num">4441 ••• 8361</span>
+                </div>
+                <span class="copy-icon">КОПІЮВАТИ</span>
+            </div>
+
+            <div class="bank-item" onclick="copyCard('5167803275489297', 'Ощадбанк')">
+                <div class="bank-info">
+                    <span class="bank-name">Ощадбанк</span>
+                    <span class="card-num">5167 ••• 9297</span>
+                </div>
+                <span class="copy-icon">КОПІЮВАТИ</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <section id="pricing" class="pricing-section">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>Наші Тарифи</h2>
+            </div>
+            <div class="price-grid">
+                <div class="price-card reveal open-modal">
+                    <h3>Фото на документи</h3>
+                    <div class="cost">від 250₴</div>
+                    <p>Формати 3х4, 3.5х4.5 та інші. Базова ретуш включена.</p>
+                    <span class="price-link">Замовити</span>
+                </div>
+
+                <div class="price-card reveal open-modal">
+                    <h3>Військові / Форма</h3>
+                    <div class="cost">від 300₴</div>
+                    <p>Заміна форми, підстановка погонів, ретуш обличчя.</p>
+                    <span class="price-link">Замовити</span>
+                </div>
+
+                <div class="price-card reveal open-modal">
+                    <h3>Друк фотографій</h3>
+                    <div class="cost">до 9₴</div>
+                    <ul class="price-list">
+                        <li>1-50 шт — <strong>9 грн (за шт.)</strong></li>
+                        <li>50-100 шт — <strong>8 грн (за шт.)</strong></li>
+                        <li>100-200 шт — <strong>7 грн (за шт.)</strong></li>
+                    <span class="price-link">Замовити друк</span>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+<section id="workflow" class="workflow container">
+        <div class="section-title reveal">
+            <h2>Як це працює</h2>
+        </div>
+        <div class="steps-grid">
+            <div class="step reveal">
+                <div class="step-num">01</div>
+                <h3>Завантаження</h3>
+                <p>Надсилаєте фото через форму або Viber та обираєте тип послуги.</p>
+            </div>
+
+            <div class="step reveal">
+                <div class="step-num">02</div>
+                <h3>Уточнення</h3>
+                <p>Ми передзвонюємо вам для уточнення деталей та оголошуємо остаточну ціну.</p>
+            </div>
+
+            <a href="viber://chat?number=%2B380985763860" class="step reveal payment-step" style="text-decoration: none; color: inherit; display: block;">
+                <div class="step-num">03</div>
+                <h3>Оплата</h3>
+                <p>Надсилаєте скріншот квитанції у Viber: <strong>098 576 38 60</strong>.</p>
+                <span style="font-size: 11px; text-transform: uppercase; margin-top: 10px; display: block; opacity: 0.6;">Натисніть для переходу в чат →</span>
+            </a>
+
+            <div class="step reveal">
+                <div class="step-num">04</div>
+                <h3>Отримання</h3>
+                <p>Отримуєте готове фото впродовж 24 годин (залежно від складності).</p>
+            </div>
+        </div>
+    </section>
+
+<section id="archive" class="archive-section container">
+    <div class="section-title reveal">
+        <h2>Архів фотографій</h2>
+    </div>
+    <div class="steps-grid">
+        <a href="viber://chat?number=%2B380985763860" class="step reveal payment-step archive-card" style="text-decoration: none; color: inherit; display: block;">
+            <div class="step-num">01</div>
+            <h3>Запит у Viber</h3>
+            <p>Напишіть нам у Viber: <strong>098 576 38 60</strong>, що хочете отримати фото з архіву.</p>
+            <span class="viber-hint">Натисніть для чату →</span>
+        </a>
+
+        <div class="step reveal archive-card">
+            <div class="step-num">02</div>
+            <h3>Ваші дані</h3>
+            <p>Вкажіть <strong>Прізвище</strong> та <strong>приблизну дату</strong> візиту до студії.</p>
+        </div>
+
+        <div class="step reveal archive-card">
+            <div class="step-num">03</div>
+            <h3>Оплата</h3>
+            <p>Надсилаєте скріншот оплати: <strong>200 грн</strong> (друк) або <strong>150 грн</strong> (файл).</p>
+        </div>
+
+        <div class="step reveal archive-card">
+            <div class="step-num">04</div>
+            <h3>Отримання</h3>
+            <p>Забираєте фото у студії або отримуєте файл у високій якості на месенджер.</p>
+        </div>
+    </div>
+</section>
+
+<footer>
+        <div id="footer" class="container footer-grid">
+            <div class="footer-about">
+                <div class="logo">KOMFORT</div>
+                <p>Ваша персональна цифрова фотостудія.</p>
+            </div>
+            
+            <div class="footer-contacts">
+                <h4>Контакти</h4>
+                <p><a href="tel:+380985763860"><strong>098 576 38 60</strong></a></p>
+                <p><a href="mailto:fotokomfort@gmail.com">fotokomfort@gmail.com</a></p>
+            </div>
+
+            <div class="footer-location">
+                <h4>Адреса</h4>
+                <p>
+                    <a href="https://www.google.com/maps/place/%D0%A4%D0%BE%D1%82%D0%BE%D0%9A%D0%BE%D0%BC%D1%84%D0%BE%D1%80%D1%82/@50.083135,25.145338,17z/data=!3m1!4b1!4m6!3m5!1s0x472ff80838aee495:0xafb28c3f54391839!8m2!3d50.083135!4d25.145338!16s%2Fg%2F1ptx7_96m?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener">
+                        📍 Дивитись на карті
+                    </a>
+                </p>
+                <p>Україна, м. Броди</p> </div>
+
+            <div class="footer-worktime">
+                <h4>Графік</h4>
+                <p>Пн-Пт: 09:00 — 17:00</p>
+                <p>Сб: 11:00 — 15:00</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">×</span>
+            <h2>Оформлення</h2>
+            <form id="orderForm">
+                <div class="form-group">
+                    <label>Телефон</label>
+<input 
+    type="tel" 
+    id="userPhone" 
+    name="phone" 
+    placeholder="067 000 00 00" 
+    pattern="[0-9]{10}" 
+    required
+    oninvalid="this.setCustomValidity('Будь ласка, введіть коректний номер (10 цифр, наприклад: 0671234567)')"
+    oninput="this.setCustomValidity('')">
+                </div>
+                <div class="form-group">
+    <label>Прізвище</label>
+<input 
+    type="text" 
+    id="userSurname" 
+    name="surname" 
+    placeholder="Ваше прізвище" 
+    required 
+    minlength="2" 
+    pattern="^[^\d]+$"
+    oninvalid="this.setCustomValidity(this.value.length < 2 ? 'Прізвище не може містити менше 2 букв' : 'Прізвище не може містити цифри')" 
+    oninput="this.setCustomValidity('')">
+</div>
+                <div class="form-group">
+                    <label>Послуга</label>
+                    <select id="type" required>
+                        <option value="digital">Цифрове фото</option>
+                        <option value="print">Друк (Самовивіз)</option>
+                    </select>
+                </div>
+<div class="form-group">
+    <label>Формат</label>
+    <select id="format">
+        <option value="3x4">3х4</option>
+        <option value="3.5x4.5">3.5х4.5</option>
+        <option value="9x12">9х12</option>
+        <option value="10x15">10х15</option>
+        <option value="15x21">15х21</option>
+        <option value="20x30">20х30</option>
+        <option value="15x42">15х42</option> <option value="20x42">20х42</option> </select>
+</div>
+<div class="form-group">
+    <label>Кількість</label>
+    <select id="quantity">
+        <option value="менше">Менше 4 шт</option> <option value="4">4 шт</option>
+        <option value="6">6 шт</option>
+        <option value="8">8 шт</option>
+        <option value="більше">Більше</option>
+    </select>
+</div>
+<div class="form-group">
+    <label>Додати фото</label>
+    <input type="file" id="photo" name="photo" accept="image/*" multiple>
+    <small style="color: #666; font-size: 12px;">Можна обрати декілька файлів</small>
+</div>
+                <div class="form-group">
+                    <label>Коментар</label>
+                    <textarea id="comment" rows="2"></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Надіслати на пошту</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+    <div id="thanksModal" class="modal">
+    <div class="modal-content" style="text-align: center;">
+        <span class="close-thanks close-modal">×</span>
+        <div style="font-size: 50px; margin-bottom: 20px;">✉️</div>
+        <h2 id="thanksTitle">Дякуємо!</h2>
+        <p id="thanksMessage" style="color: var(--gray); margin-top: 15px; line-height: 1.6;"></p>
+        <button class="btn-submit close-thanks" style="margin-top: 25px;">Зрозуміло</button>
+    </div>
+</div>
+
+<div class="floating-contact-wrap">
+    <a href="tel:+380985763860" class="floating-btn call-btn" title="Зателефонувати">
+        <div class="pulse"></div>
+        <svg viewBox="0 0 24 24" width="28" height="28">
+            <path fill="currentColor" d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z" />
+        </svg>
+    </a>
+</div>
+
+<div id="infoModal" class="modal">
+    <div class="modal-content" style="max-width: 500px;">
+        <span id="closeInfo" class="close-modal">×</span>
+        <h2 style="margin-bottom: 20px;">Ціни</h2>
+        <img src="karta.jpg" alt="Карта" style="width: 100%; border-radius: 5px; border: 1px solid rgba(255,255,255,0.1);">
+        <div style="margin-top: 20px; text-align: center;">
+            <p>Карта друку</p>
+            <p style="color: var(--gray); font-size: 14px; margin-top: 10px;">2026 KOMFORT</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

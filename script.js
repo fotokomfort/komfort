@@ -177,3 +177,71 @@ document.addEventListener('DOMContentLoaded', () => {
     // ... далі ваш код анімацій та відправки форми ...
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('gallery-modal');
+    const modalImg = document.getElementById('gallery-img');
+    const closeBtn = document.querySelector('.gallery-close');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    
+    let currentImages = [];
+    let currentIndex = 0;
+
+    // Відкриття при кліку на фото
+    document.querySelectorAll('.product-img img').forEach(img => {
+        img.addEventListener('click', function() {
+            // Отримуємо список фото з атрибута data-images або просто беремо одне фото
+            const imagesAttr = this.getAttribute('data-images');
+            if (imagesAttr) {
+                currentImages = imagesAttr.split(',');
+            } else {
+                currentImages = [this.src];
+            }
+            
+            currentIndex = 0;
+            updateModalImage();
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Заборона скролу фону
+        });
+    });
+
+    function updateModalImage() {
+        modalImg.src = currentImages[currentIndex];
+        // Сховати стрілки, якщо фото лише одне
+        if (currentImages.length <= 1) {
+            prevBtn.style.display = 'none';
+            nextBtn.style.display = 'none';
+        } else {
+            prevBtn.style.display = 'block';
+            nextBtn.style.display = 'block';
+        }
+    }
+
+    // Перемикання вперед
+    nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        currentIndex = (currentIndex + 1) % currentImages.length;
+        updateModalImage();
+    });
+
+    // Перемикання назад
+    prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+        updateModalImage();
+    });
+
+    // Закриття
+    closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    });
+
+    // Закриття при кліку поза фото
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal || e.target === modalImg.parentElement) {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    });
+});

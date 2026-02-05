@@ -949,3 +949,86 @@ select:focus {
         padding: 5px 10px;
     }
 }
+
+/* Віджет графіка работи */
+.work-schedule-widget {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    display: flex;
+    align-items: center;
+    background: rgba(13, 27, 42, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 10px 15px;
+    border-radius: 50px;
+    z-index: 500;
+    backdrop-filter: blur(10px);
+    cursor: default;
+    overflow: hidden;
+    transition: all 0.5s ease;
+}
+
+/* Лампа */
+.schedule-lamp {
+    width: 12px;
+    height: 12px;
+    background-color: #00ff88; /* Зеленый - работаем */
+    border-radius: 50%;
+    box-shadow: 0 0 10px #00ff88;
+    margin-right: 10px;
+    flex-shrink: 0;
+    animation: lamp-blink 2s infinite;
+}
+
+@keyframes lamp-blink {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.9); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* Контейнер для текста */
+.schedule-text-container {
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: max-width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: toggle-text 10s infinite;
+}
+
+.schedule-text {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--white);
+}
+
+/* Анімація: 5 сек відкрито, 5 сек закрито */
+@keyframes toggle-text {
+    0%, 45% { max-width: 200px; margin-left: 5px; } /* Открыто */
+    50%, 95% { max-width: 0; margin-left: 0; }     /* Закрыто */
+    100% { max-width: 200px; margin-left: 5px; }
+}
+
+/* Адаптація для телефонів */
+@media (max-width: 600px) {
+    .work-schedule-widget {
+        bottom: 20px;
+        left: 20px;
+        padding: 8px 12px;
+    }
+}
+
+/* Ефект при наведенні */
+.work-schedule-widget:hover {
+    border-color: var(--white);
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-5px);
+}
+
+/* Стилізація тексту */
+#scheduleModal p {
+    font-size: 16px;
+    line-height: 1.6;
+}
+

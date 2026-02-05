@@ -8,6 +8,7 @@
     <meta property="og:description" content="Професійна обробка фото. Результат впродовж 24 годин." />
     <meta property="og:image" content="https://solllixxx.github.io/komfort/logo.jpg" />
     <meta property="og:url" content="https://solllixxx.github.io/komfort/" />
+    <link rel="canonical" href="https://fotokomfort.github.io/komfort/" />
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
     <link rel="icon" href="image/logo.jpg" type="image/jpeg">
@@ -172,7 +173,14 @@
         <div id="footer" class="container footer-grid">
             <div class="footer-about">
                 <div class="logo">KOMFORT</div>
-                <p>Ваша персональна цифрова фотостудія.</p>
+                <p>© 2026 Ваша персональна цифрова фотостудія.</p>
+                <p>
+                 <a href="javascript:void(0)" 
+                  onclick="sendMailDirect('zazhytskyi1@gmail.com', 'Розробка сайту')" 
+                  class="developer-link">
+                  Розробник сайту Зажицький Ярослав (solix).
+                 </a>
+                </p>
             </div>
             
             <div class="footer-contacts">
@@ -193,7 +201,7 @@
             <div class="footer-worktime">
                 <h4>Графік</h4>
                 <p>Пн-Пт: 09:00 — 17:00</p>
-                <p>Сб: 11:00 — 15:00</p>
+                <p>Сб-Нд: Вихідний</p>
             </div>
         </div>
     </footer>
@@ -299,6 +307,37 @@
             <p>Карта друку</p>
             <p style="color: var(--gray); font-size: 14px; margin-top: 10px;">2026 KOMFORT</p>
         </div>
+    </div>
+</div>
+
+<div class="work-schedule-widget" onclick="openScheduleModal()" style="cursor: pointer;">
+    <div class="schedule-lamp"></div>
+    <div class="schedule-text-container">
+        <span class="schedule-text" id="scheduleText">Графік роботи</span>
+    </div>
+</div>
+
+<div id="scheduleModal" class="modal">
+    <div class="modal-content" style="max-width: 400px; text-align: center;">
+        <span class="close-modal" onclick="closeScheduleModal()">×</span>
+        <div style="font-size: 40px; margin-bottom: 20px;">🕒</div>
+        <h2 style="margin-bottom: 20px; letter-spacing: 2px;">ГРАФІК РОБОТИ</h2>
+        
+        <div style="text-align: left; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px;">
+            <p style="margin-bottom: 10px; display: flex; justify-content: space-between;">
+                <span>Пн-Пт:</span> 
+                <strong style="color: #00ff88;">09:00 — 17:00</strong>
+            </p>
+            <p style="font-size: 13px; color: var(--gray); margin-bottom: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+                ⚠️ Працюємо за графіком відключень світла (черга 3.2)
+            </p>
+            <p style="display: flex; justify-content: space-between; opacity: 0.7;">
+                <span>Сб-Нд:</span> 
+                <span>Вихідний</span>
+            </p>
+        </div>
+        
+        <button class="btn-submit" onclick="closeScheduleModal()" style="margin-top: 25px;">Зрозуміло</button>
     </div>
 </div>
 </body>

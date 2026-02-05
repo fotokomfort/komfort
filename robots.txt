@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://fotokomfort.github.io/komfort/

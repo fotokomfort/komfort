@@ -1,247 +1,220 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const modal = document.getElementById("orderModal");
-    const thanksModal = document.getElementById("thanksModal");
-    const btns = document.querySelectorAll(".open-modal");
-    const closeBtns = document.querySelectorAll(".close-modal, .close-thanks");
+    // --- 1. ОБ'ЄКТИ МОДАЛЬНИХ ВІКОН ---
+    const modals = {
+        order: document.getElementById("orderModal"),
+        info: document.getElementById("infoModal"),
+        thanks: document.getElementById("thanksModal"),
+        schedule: document.getElementById("scheduleModal"),
+        gallery: document.getElementById("gallery-modal")
+    };
 
-    // --- 1. КЕРУВАННЯ МОДАЛКАМИ (Відкриття та закриття) ---
-    btns.forEach(btn => {
+    const orderBtns = document.querySelectorAll(".open-modal");
+    const infoBtn = document.getElementById("infoBtn");
+    const closeBtns = document.querySelectorAll(".close-modal, .close-thanks, .gallery-close");
+
+    // --- 2. УНІВЕРСАЛЬНЕ КЕРУВАННЯ МОДАЛКАМИ ---
+
+    // Функція для закриття всіх активних модалок
+    const closeAllModals = () => {
+        Object.values(modals).forEach(modal => {
+            if (modal) modal.style.display = "none";
+        });
+        document.body.style.overflow = "auto";
+    };
+
+    // Відкриття модалки замовлення
+    orderBtns.forEach(btn => {
         btn.onclick = (e) => {
             e.preventDefault();
-            modal.style.display = "block";
+            closeAllModals();
+            if (modals.order) modals.order.style.display = "block";
             document.body.style.overflow = "hidden";
         };
     });
 
+    // Відкриття модалки інформації (карта цін)
+    if (infoBtn) {
+        infoBtn.onclick = (e) => {
+            e.preventDefault();
+            closeAllModals();
+            if (modals.info) modals.info.style.display = "block";
+            document.body.style.overflow = "hidden";
+        };
+    }
+
+    // Обробка всіх кнопок закриття (хрестики та кнопки "Зрозуміло")
     closeBtns.forEach(btn => {
-        btn.onclick = () => {
-            modal.style.display = "none";
-            thanksModal.style.display = "none";
-            document.body.style.overflow = "auto";
+        btn.onclick = (e) => {
+            e.stopPropagation();
+            closeAllModals();
         };
     });
 
     // Закриття при кліку на темний фон
-    window.onclick = (e) => { 
-        if (e.target == modal || e.target == thanksModal) {
-            modal.style.display = "none";
-            thanksModal.style.display = "none";
-            document.body.style.overflow = "auto";
+    window.addEventListener('click', (e) => {
+        if (Object.values(modals).includes(e.target)) {
+            closeAllModals();
         }
-    };
+    });
 
-    // --- 2. АНІМАЦІЯ ПРИ СКРОЛІ ---
+    // Глобальні функції для виклику з HTML (onclick)
+    window.openScheduleModal = () => {
+        closeAllModals();
+        if (modals.schedule) modals.schedule.style.display = "block";
+        document.body.style.overflow = "hidden";
+    };
+    
+    window.closeScheduleModal = closeAllModals;
+
+    // --- 3. ВІДЖЕТ ГРАФІКА РОБОТИ (ТЕКСТ ЩО ЗМІНЮЄТЬСЯ) ---
+    const scheduleText = document.getElementById('scheduleText');
+    if (scheduleText) {
+        const messages = ["Графік роботи"];
+        let msgIndex = 0;
+
+        setInterval(() => {
+            msgIndex = (msgIndex + 1) % messages.length;
+            // Зміна тексту відбувається під час того, як контейнер закритий анімацією (через 5 сек)
+            setTimeout(() => {
+                scheduleText.textContent = messages[msgIndex];
+            }, 5000);
+        }, 10000);
+    }
+
+    // --- 4. АНІМАЦІЯ ПОЯВИ ПРИ СКРОЛІ (REVEAL) ---
     const reveal = () => {
         document.querySelectorAll('.reveal').forEach(el => {
-            if (el.getBoundingClientRect().top < window.innerHeight - 50) {
+            const windowHeight = window.innerHeight;
+            const elementTop = el.getBoundingClientRect().top;
+            const elementVisible = 50;
+            if (elementTop < windowHeight - elementVisible) {
                 el.classList.add('active');
             }
         });
     };
     window.addEventListener('scroll', reveal);
-    reveal();
+    reveal(); // Запуск при завантаженні сторінки
 
-    // --- 3. ВІДПРАВКА ФОРМИ ЗАМОВЛЕННЯ ---
+    // --- 5. ОБРОБКА ФОРМИ ЗАМОВЛЕННЯ ---
     const orderForm = document.getElementById('orderForm');
     if (orderForm) {
         orderForm.onsubmit = (e) => {
             e.preventDefault();
             
-            const phone = document.getElementById('userPhone').value;
-            const surname = document.getElementById('userSurname').value;
-            const type = document.getElementById('type').value;
-            const format = document.getElementById('format').value;
-            const quantity = document.getElementById('quantity').value;
-            const comment = document.getElementById('comment').value;
-            const fileInput = document.getElementById('photo');
-            const filesCount = fileInput ? fileInput.files.length : 0;
+            const data = {
+                phone: document.getElementById('userPhone').value,
+                surname: document.getElementById('userSurname').value,
+                type: document.getElementById('type').value === 'digital' ? "Цифрове фото" : "Друк (Самовивіз)",
+                format: document.getElementById('format').value,
+                quantity: document.getElementById('quantity').value,
+                comment: document.getElementById('comment').value,
+                filesCount: document.getElementById('photo')?.files.length || 0
+            };
 
-            const typeText = (type === 'digital') ? "Цифрове фото" : "Друк (Самовивіз)";
-
-            // Формування тексту листа
-            const subjectText = `Замовлення: ${surname} | ${phone}`;
             const bodyText = `НОВЕ ЗАМОВЛЕННЯ\n` +
                 `---------------------------\n` +
-                `👤 Прізвище: ${surname}\n` +
-                `📞 Телефон: ${phone}\n` +
-                `🛠 Послуга: ${typeText}\n` +
-                `📐 Формат: ${format}\n` +
-                `🔢 Кількість: ${quantity}\n` +
-                `💬 Коментар: ${comment}\n` +
+                `👤 Прізвище: ${data.surname}\n` +
+                `📞 Телефон: ${data.phone}\n` +
+                `🛠 Послуга: ${data.type}\n` +
+                `📐 Формат: ${data.format}\n` +
+                `🔢 Кількість: ${data.quantity}\n` +
+                `💬 Коментар: ${data.comment}\n` +
                 `---------------------------\n` +
-                `📂 Фото у формі: ${filesCount} шт.\n\n` +
-                `⚠️ ВАЖЛИВО: Будь ласка, натисніть на значок "СКРІПКА" та додайте ваші фото до листа!`;
+                `📂 Фото у формі: ${data.filesCount} шт.\n\n` +
+                `⚠️ ВАЖЛИВО: Натисніть на "СКРІПКУ" та додайте фото до листа!`;
 
-            const subjectEncoded = encodeURIComponent(subjectText);
-            const bodyEncoded = encodeURIComponent(bodyText);
-
-            const platform = navigator.platform.toLowerCase();
-            const isWindows = platform.indexOf('win') !== -1;
-
-            // --- ЗАМІНЕНО НА fotokomfort@gmail.com ---
+            const isWindows = navigator.platform.toLowerCase().includes('win');
             const targetEmail = "fotokomfort@gmail.com";
-            const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${targetEmail}&su=${subjectEncoded}&body=${bodyEncoded}`;
-            const mailtoUrl = `mailto:${targetEmail}?subject=${subjectEncoded}&body=${bodyEncoded}`;
+            const subject = encodeURIComponent(`Замовлення: ${data.surname} | ${data.phone}`);
+            const body = encodeURIComponent(bodyText);
 
-            // Логіка переходу до пошти
-            if (isWindows) {
-                window.open(gmailUrl, '_blank');
-            } else {
-                window.location.href = mailtoUrl;
+            const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${targetEmail}&su=${subject}&body=${body}`;
+            const mailtoUrl = `mailto:${targetEmail}?subject=${subject}&body=${body}`;
+
+            // Відкриваємо пошту
+            isWindows ? window.open(gmailUrl, '_blank') : window.location.href = mailtoUrl;
+
+            // Показуємо вікно подяки
+            closeAllModals();
+            if (modals.thanks) {
+                document.getElementById('thanksTitle').innerText = `Дякуємо, ${data.surname}!`;
+                document.getElementById('thanksMessage').innerHTML = isWindows 
+                    ? "Ми відкрили <b>Gmail</b>. Будь ласка, додайте фото через скріпку та надішліть лист." 
+                    : "Зараз відкриється ваша <b>пошта</b>. Не забудьте додати фото перед відправкою!";
+                modals.thanks.style.display = "block";
+                document.body.style.overflow = "hidden";
             }
-            
-            // Вікно подяки після відправки
-            modal.style.display = "none";
-            const thanksTitle = document.getElementById('thanksTitle');
-            const thanksMessage = document.getElementById('thanksMessage');
-
-            if (thanksTitle && thanksMessage) {
-                thanksTitle.innerText = `Дякуємо, ${surname}!`;
-                thanksMessage.innerHTML = isWindows 
-                    ? "Ми відкрили <b>Gmail</b> у новій вкладці. Будь ласка, додайте фото через скріпку та надішліть цей лист нам." 
-                    : "Зараз відкриється ваша <b>пошта</b>. Не забудьте натиснути на скріпку, щоб додати ваші фото!";
-            }
-
-            thanksModal.style.display = "block";
-            document.body.style.overflow = "hidden";
-        };
-    }
-});
-
-// --- 4. КОПІЮВАННЯ КАРТКИ ---
-function copyCard(number, bankName) {
-    navigator.clipboard.writeText(number).then(() => {
-        const thanksModal = document.getElementById("thanksModal");
-        const thanksTitle = document.getElementById("thanksTitle");
-        const thanksMessage = document.getElementById("thanksMessage");
-
-        if (thanksModal) {
-            thanksTitle.innerText = "Скопійовано!";
-            thanksMessage.innerHTML = `Номер картки <b>${bankName}</b> скопійовано. Тепер ви можете вставити його в додатку вашого банку для оплати.`;
-            thanksModal.style.display = "block";
-            document.body.style.overflow = "hidden";
-        }
-    }).catch(err => {
-        console.error('Не вдалося скопіювати:', err);
-    });
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    const orderModal = document.getElementById("orderModal");
-    const infoModal = document.getElementById("infoModal");
-    const thanksModal = document.getElementById("thanksModal");
-
-    const orderBtns = document.querySelectorAll(".open-modal"); // Кнопки "Замовити"
-    const infoBtn = document.getElementById("infoBtn"); // Кнопка "Інформація"
-    
-    const closeBtns = document.querySelectorAll(".close-modal, .close-thanks");
-
-    // Відкриття модалки ЗАМОВЛЕННЯ
-    orderBtns.forEach(btn => {
-        btn.onclick = (e) => {
-            e.preventDefault();
-            orderModal.style.display = "block";
-            document.body.style.overflow = "hidden";
-        };
-    });
-
-    // Відкриття модалки ІНФОРМАЦІЇ
-    if (infoBtn) {
-        infoBtn.onclick = (e) => {
-            e.preventDefault();
-            infoModal.style.display = "block";
-            document.body.style.overflow = "hidden";
         };
     }
 
-    // Закриття ВСІХ модалок
-    closeBtns.forEach(btn => {
-        btn.onclick = () => {
-            orderModal.style.display = "none";
-            infoModal.style.display = "none";
-            thanksModal.style.display = "none";
-            document.body.style.overflow = "auto";
-        };
-    });
-
-    // Закриття при кліку на фон
-    window.addEventListener('click', (e) => {
-        if (e.target == orderModal || e.target == infoModal || e.target == thanksModal) {
-            orderModal.style.display = "none";
-            infoModal.style.display = "none";
-            thanksModal.style.display = "none";
-            document.body.style.overflow = "auto";
-        }
-    });
-
-    // ... далі ваш код анімацій та відправки форми ...
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-    const modal = document.getElementById('gallery-modal');
+    // --- 6. ГАЛЕРЕЯ ТОВАРІВ (ЯКЩО Є) ---
     const modalImg = document.getElementById('gallery-img');
-    const closeBtn = document.querySelector('.gallery-close');
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
-    
     let currentImages = [];
     let currentIndex = 0;
 
-    // Відкриття при кліку на фото
     document.querySelectorAll('.product-img img').forEach(img => {
         img.addEventListener('click', function() {
-            // Отримуємо список фото з атрибута data-images або просто беремо одне фото
             const imagesAttr = this.getAttribute('data-images');
-            if (imagesAttr) {
-                currentImages = imagesAttr.split(',');
-            } else {
-                currentImages = [this.src];
-            }
-            
+            currentImages = imagesAttr ? imagesAttr.split(',') : [this.src];
             currentIndex = 0;
-            updateModalImage();
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // Заборона скролу фону
+            
+            if (modalImg) {
+                modalImg.src = currentImages[currentIndex];
+                modals.gallery.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                
+                // Керування стрілками
+                if (prevBtn && nextBtn) {
+                    const showBtns = currentImages.length > 1 ? 'block' : 'none';
+                    prevBtn.style.display = showBtns;
+                    nextBtn.style.display = showBtns;
+                }
+            }
         });
     });
 
-    function updateModalImage() {
-        modalImg.src = currentImages[currentIndex];
-        // Сховати стрілки, якщо фото лише одне
-        if (currentImages.length <= 1) {
-            prevBtn.style.display = 'none';
-            nextBtn.style.display = 'none';
-        } else {
-            prevBtn.style.display = 'block';
-            nextBtn.style.display = 'block';
-        }
+    if (nextBtn) {
+        nextBtn.onclick = (e) => {
+            e.stopPropagation();
+            currentIndex = (currentIndex + 1) % currentImages.length;
+            modalImg.src = currentImages[currentIndex];
+        };
     }
 
-    // Перемикання вперед
-    nextBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        currentIndex = (currentIndex + 1) % currentImages.length;
-        updateModalImage();
-    });
+    if (prevBtn) {
+        prevBtn.onclick = (e) => {
+            e.stopPropagation();
+            currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+            modalImg.src = currentImages[currentIndex];
+        };
+    }
+});
 
-    // Перемикання назад
-    prevBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
-        updateModalImage();
-    });
+// --- 7. ГЛОБАЛЬНІ ДОПОМІЖНІ ФУНКЦІЇ ---
 
-    // Закриття
-    closeBtn.addEventListener('click', () => {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-    });
-
-    // Закриття при кліку поза фото
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal || e.target === modalImg.parentElement) {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
+// Копіювання номера картки
+function copyCard(number, bankName) {
+    navigator.clipboard.writeText(number).then(() => {
+        const thanksModal = document.getElementById("thanksModal");
+        if (thanksModal) {
+            document.getElementById("thanksTitle").innerText = "Скопійовано!";
+            document.getElementById("thanksMessage").innerHTML = `Номер картки <b>${bankName}</b> скопійовано. Вставте його у банківський додаток.`;
+            thanksModal.style.display = "block";
+            document.body.style.overflow = "hidden";
         }
     });
-});
+}
+
+// Пряме відправлення листа розробнику або студії
+function sendMailDirect(email, subjectText = "Питання щодо Komfort") {
+    const isWindows = navigator.platform.toLowerCase().includes('win');
+    const subject = encodeURIComponent(subjectText);
+    const body = encodeURIComponent("Вітаю! У мене є питання щодо...");
+    
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${subject}&body=${body}`;
+    const mailtoUrl = `mailto:${email}?subject=${subject}&body=${body}`;
+
+    isWindows ? window.open(gmailUrl, '_blank') : window.location.href = mailtoUrl;
+}
